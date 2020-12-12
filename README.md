@@ -4,4 +4,4 @@ This is my first project on Github. My goal is to develop a container applicatio
 
 ## Architecture
 
-![](architecture.svg)
+![](architecture/architecture.svg)
