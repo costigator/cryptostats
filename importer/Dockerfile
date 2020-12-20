@@ -1,6 +1,7 @@
 FROM python:slim
 
-ENV PYTHONUNBUFFERED=0
+ENV DB_URI mongodb://crypto:Cr7ptopa55@mongo:27017
+ENV SCRAPE_INTERVAL 60
 
 WORKDIR /app
 
@@ -16,4 +17,4 @@ RUN useradd appuser && chown -R appuser /app
 USER appuser
 
 # Entrypoint
-CMD ["python", "importer.py"]
+CMD ["python", "-u", "importer.py"]
