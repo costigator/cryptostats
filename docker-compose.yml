@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+
+  mongo:
+    image: mongo
+    build: ./mongo
+    restart: always
+    volumes:
+      - ./mongo/data:/data/db
+    ports:
+      - 27017:27017
+
+  importer:
+    image: importer
+    build: ./importer
+    depends_on:
+      - mongo
