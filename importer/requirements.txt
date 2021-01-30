@@ -1,2 +1,4 @@
 pymongo
-pycoingecko
+pytimeparse
+unicorn-binance-websocket-api
+python-binance
