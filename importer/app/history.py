@@ -121,7 +121,7 @@ if __name__ == "__main__":
                     logging.info("Excluding period starting from {} to {} for {} because it is already complete".format(
                         to_datetime(min_close_time), to_datetime(max_close_time), stream_type
                     ))
-                    history_end_date_ms = min_close_time / 1000
+                    history_end_date_ms = min_close_time
                 else:
                     logging.info("{} has {} missing records".format(stream_type, expected_entries - count_entries))
 
