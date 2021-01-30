@@ -14,5 +14,6 @@ services:
   importer:
     image: importer
     build: ./importer
+    restart: always
     depends_on:
       - mongo
