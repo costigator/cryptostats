@@ -1,0 +1,11 @@
+DB_URI: mongodb://crypto:Cr7ptopa55@localhost:27017
+BINANCE_API_URL: https://api.binance.com/api/v1
+
+STREAM_EXCHANGE: binance.com
+STREAM_UPDATE_INTERVAL_S: 1
+
+HISTORY_START_DATE: "2021-01-01 00:00:00"
+HISTORY_RUN_EVERY_MIN: 60
+
+IMPORT_SYMBOLS_EVERY_M: 5
+CHANNELS: kline_1m, kline_5m, kline_15m, kline_1h, kline_4h, kline_1d
