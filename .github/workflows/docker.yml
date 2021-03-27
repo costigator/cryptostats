@@ -25,8 +25,10 @@ jobs:
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Build importer Docker image
         run: |
+          docker build ./importer -t costigator/importer:latest
           docker build ./importer -t costigator/importer:1.0.0
       - name: Push images to Docker
         run: |
+          docker push costigator/importer:latest
           docker push costigator/importer:1.0.0
         
