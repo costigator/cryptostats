@@ -20,5 +20,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: Docker build
         run: |
-          docker build ./importer -t costigator:importer:1.0.0
+          docker build ./importer -t costigator/importer:1.0.0
         
