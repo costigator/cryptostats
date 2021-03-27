@@ -1,0 +1,13 @@
+pandas
+pymongo
+pycoingecko
+matplotlib
+seaborn
+bta-lib
+tqdm
+python-binance
+unicorn-binance-websocket-api
+plotly
+pytimeparse
+python-box
+PyYAML
