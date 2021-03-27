@@ -2,3 +2,4 @@ pymongo
 pytimeparse
 unicorn-binance-websocket-api
 python-binance
+pycoingecko
