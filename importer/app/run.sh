@@ -1,3 +1,4 @@
 #!/bin/bash
-python -u stream.py &
-python -u history.py
+python -u get_symbols.py &
+python -u get_stream.py &
+python -u get_history.py
