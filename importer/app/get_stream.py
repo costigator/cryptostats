@@ -29,9 +29,9 @@ def load_symbols():
             logging.info(f"{len(symbols)} symbols found in the DB")
             return symbols
 
-        logging.warning("No symbols found in the DB. Retrying in 5 seconds")
+        logging.warning("No symbols marked for trading found in the DB. Retrying in 1 minute")
 
-        sleep(5)
+        sleep(60)
 
 # call main function
 if __name__ == "__main__":

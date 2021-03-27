@@ -4,15 +4,14 @@ services:
 
   mongodb:
     image: mongo
-    build: ./db
     restart: always
     volumes:
       - ./mongodb/data:/data/db
     ports:
       - 27017:27017
     environment:
-      - MONGO_INITDB_ROOT_USERNAME = crypto
-      - MONGO_INITDB_ROOT_PASSWORD = Cr7ptopa55
+      - MONGO_INITDB_ROOT_USERNAME=crypto
+      - MONGO_INITDB_ROOT_PASSWORD=Cr7ptopa55
 
   importer:
     image: importer
@@ -21,4 +20,4 @@ services:
     depends_on:
       - mongodb
     environment: 
-      - DB_URI = mongodb://crypto:Cr7ptopa55@mongodb:27017
+      - DB_URI=mongodb://crypto:Cr7ptopa55@mongodb:27017
