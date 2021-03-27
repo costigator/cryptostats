@@ -1,3 +1,4 @@
 _archive
-db/data
 __pycache__
+mongodb/data/*
+!mongodb/data/.gitkeep
