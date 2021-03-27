@@ -11,6 +11,18 @@ from logging.config import fileConfig
 from pycoingecko import CoinGeckoAPI
 from time import sleep, time
 
+# functions
+def get_coin_details(symbol):
+    ''' get coin details from list of coins '''
+
+    symbol = symbol.replace(config.env.SYMBOLS_FILTER, "").lower()
+
+    for coin in coinGekoCoins:
+        if coin.get('symbol') == symbol:
+            return coin
+
+    return None
+
 # call main function
 if __name__ == "__main__":
 
@@ -37,31 +49,34 @@ if __name__ == "__main__":
         result = requests.get(url).json()
         symbols = result.get('symbols')
 
-        all_symbols = []
+        filtered_symbols = []
         for symbol in symbols:
-            all_symbols.append(symbol.get('symbol'))
+            if config.env.SYMBOLS_FILTER in symbol.get('symbol'):
+                filtered_symbols.append(symbol.get('symbol'))
 
-        logging.info("Found {} symbols traded on Binance".format(len(all_symbols)))
+        logging.info(f'Found {len(filtered_symbols)} symbols with filter "{config.env.SYMBOLS_FILTER}" traded on Binance')
         
         # filter symbols
         coinGekoCoins = []
-        for i in range (0,2): # get first 2 pages with each 250 coins
+        for i in range (0,config.env.SYMBOLS_COINGEKO_PAGES): # every page has max 250 coins
             coinGekoCoins += cg.get_coins_markets('USD', page=i, per_page=250)
 
         logging.info("{} coins imported from CoinGeko".format(len(coinGekoCoins)))
 
+        # get_coin_details("ETHUSDT")
+
+
         # formatting and inserting to DB
-        logging.info("Filtering symbols with USDT only")
         try:
 
             start_time = time()
 
             bulkUpdate = []
-            for coin in coinGekoCoins:
+            for symbol in filtered_symbols:
 
-                symbol = "{}{}".format(coin.get('symbol').upper(), 'USDT')
+                coin = get_coin_details(symbol)
 
-                if symbol in all_symbols:
+                if coin:
                     record = {}
                     record['market_cap'] = coin.get('market_cap')
                     record['image'] = coin.get('image')
@@ -77,13 +92,16 @@ if __name__ == "__main__":
                         }, 
                         upsert=True)
                     )
-                
-            result = db.binance.symbols.bulk_write(bulkUpdate)
+            
+            skipped_symbols = len(filtered_symbols) - len(bulkUpdate)
+            if skipped_symbols > 0:
+                logging.info(f"Skipping {skipped_symbols} symbols because not found on CoinGeko and probably have very low marke cap")
 
+            result = db.binance.symbols.bulk_write(bulkUpdate)
             logging.info("[{} ms] {} symbols updated successfully".format(int((time() - start_time) * 1000), result.matched_count))
 
         except Exception as e:
             logging.error(e)
 
-        logging.info("Updating again in {} minutes".format(config.env.IMPORT_SYMBOLS_EVERY_M))
-        sleep(int(config.env.IMPORT_SYMBOLS_EVERY_M) * 60)
+        logging.info("Updating again in {} minutes".format(config.env.SYMBOLS_IMPORT_EVERY_M))
+        sleep(int(config.env.SYMBOLS_IMPORT_EVERY_M) * 60)
