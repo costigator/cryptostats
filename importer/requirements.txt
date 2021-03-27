@@ -3,3 +3,5 @@ pytimeparse
 unicorn-binance-websocket-api
 python-binance
 pycoingecko
+python-box
+PyYAML
