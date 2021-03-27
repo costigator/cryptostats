@@ -1,4 +1,4 @@
-name: Docker Images Build
+name: Docker Images Deployment
 
 # Controls when the action will run. 
 on:
@@ -13,12 +13,20 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Docker build
+      - name: Login to Docker
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Build importer Docker image
         run: |
           docker build ./importer -t costigator/importer:1.0.0
+      - name: Push images to Docker
+        run: |
+          docker push costigator/importer:1.0.0
         
