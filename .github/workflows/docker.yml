@@ -27,8 +27,12 @@ jobs:
         run: |
           docker build ./importer -t costigator/importer:latest
           docker build ./importer -t costigator/importer:1.0.0
+          docker build ./web -t costigator/web:latest
+          docker build ./web -t costigator/web:1.0.0
       - name: Push images to Docker
         run: |
           docker push costigator/importer:latest
           docker push costigator/importer:1.0.0
+          docker push costigator/web:latest
+          docker push costigator/web:1.0.0
         

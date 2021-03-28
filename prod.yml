@@ -20,3 +20,13 @@ services:
       - mongodb
     environment: 
       - DB_URI=mongodb://crypto:Cr7ptopa55@mongodb:27017
+
+  web:
+    image: costigator/web:1.0.0
+    restart: always
+    depends_on:
+      - mongodb
+    ports:
+      - 80:80
+    environment: 
+      - DB_URI=mongodb://crypto:Cr7ptopa55@mongodb:27017
