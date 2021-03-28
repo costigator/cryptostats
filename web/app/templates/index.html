@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>Symbols</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+        <script src="https://semantic-ui.com/javascript/library/tablesort.js"></script>
+    </head>
+    <body>
+        <div class="ui container">
+            <h1>Symbols</h1>
+            <table class="ui sortable striped table">
+                <thead>
+                    <tr>
+                        <th>Active</th>
+                        <th>Symbol</th>
+                        <th >Name</th>
+                        <th class="sorted descending">Market Cap</th>
+                        <th>Integrity</th>
+                        <th>Volatility 15m</th>
+                        <th>Volatility 1h</th>
+                        <th>Change 24h</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for symbol in symbols %}
+                    <tr>
+                        <td>
+                            <form method="post" action="/{% if symbol.tradeable %}deactivate{% else %}activate{% endif %}/{{ symbol.symbol }}">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" tabindex="0" onChange="this.form.submit()" {% if symbol.tradeable %}checked{% endif %}/>
+                                </div>
+                            </form>
+                        </td>
+                        <td>
+                            <a href="/symbol/{{ symbol.symbol }}">
+                                <img class="ui avatar image" src="{{ symbol.image }}">
+                                <span>{{ symbol.symbol }}</span>
+                            </a>
+                        </td>
+                        <td>{{ symbol.name }}</td>
+                        <td data-sort-value="{{ symbol.market_cap }}">{{ symbol.market_cap }}</td>
+                        <td data-sort-value="{{ symbol.integrity_1m }}">
+                            <div class="ui rating" data-rating="{{ symbol.integrity_1m }}" data-max-rating="3"></div>
+                        </td>
+                        <td data-sort-value="{{ symbol.volatility_15m }}">
+                            <div class="ui label">
+                                <i class="chart bar outline icon"></i> {{ symbol.volatility_15m }}%
+                            </div>
+                        </td>
+                        <td data-sort-value="{{ symbol.volatility_1h }}">
+                            <div class="ui label">
+                                <i class="chart bar outline icon"></i> {{ symbol.volatility_1h }}%
+                            </div>
+                        </td>
+                        <td data-sort-value="{{ symbol.price_change_percentage_24h }}">
+                            <div class="ui {{ symbol.price_change_percentage_24h_color }} label">{{ symbol.price_change_percentage_24h }}%</div>
+                        </td>
+                        <!-- <td><div class="ui indicating progress small" data-percent="{{ symbol.new_closing_highs_24h }}">
+                            <div class="bar" style="width: {{ symbol.new_closing_highs_24h }}%"></div>
+                          </div></td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+    <script>
+        $('.ui.rating').rating();
+        $('table').tablesort();
+        $('.ui.checkbox').checkbox();
+    </script>
+</html>
