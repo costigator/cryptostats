@@ -21,7 +21,7 @@ Useful links:
 Build and start the app with docker compose:
 
 ```cmd
-docker-compose up --build --remove-orphans
+docker-compose up -d --build --remove-orphans
 ```
 
 ## Python

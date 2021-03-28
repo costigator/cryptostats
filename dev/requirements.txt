@@ -11,3 +11,4 @@ plotly
 pytimeparse
 python-box
 PyYAML
+Jinja2
