@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+
+  mongodb:
+    image: mongo
+    restart: always
+    volumes:
+      - ./mongodb/data:/data/db
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=crypto
+      - MONGO_INITDB_ROOT_PASSWORD=Cr7ptopa55
+
+  importer:
+    image: costigator/importer:1.0.0
+    restart: always
+    depends_on:
+      - mongodb
+    environment: 
+      - DB_URI=mongodb://crypto:Cr7ptopa55@mongodb:27017
