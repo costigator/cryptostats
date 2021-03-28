@@ -21,3 +21,18 @@ services:
       - mongodb
     environment: 
       - DB_URI=mongodb://crypto:Cr7ptopa55@mongodb:27017
+
+  web:
+    image: web
+    build: ./web
+    restart: always
+    volumes:
+      - ./web/app:/app
+    ports:
+      - 8000:80
+    depends_on: 
+      - mongodb
+    environment: 
+      - DB_URI=mongodb://crypto:Cr7ptopa55@mongodb:27017
+    command:
+      - "/start-reload.sh"
