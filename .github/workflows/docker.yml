@@ -16,17 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - name: Get current version
-      #   run: |
-      #     echo '::set-env name=CURRENT_VERSION::'$(cat current-version.txt)
       - name: Get current version
         id: vars
         run: echo ::set-output name=version::$(cat current-version.txt)
-      - name: Check current version
+      - name: Save current version in a variable
         env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.version }}
-        run: |
-          echo "Current version:" $CURRENT_VERSION
+          CURRENT_VERSION: ${{ steps.vars.outputs.version }}
       - name: Login to Docker
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
