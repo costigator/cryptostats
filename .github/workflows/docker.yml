@@ -18,16 +18,17 @@ jobs:
       - uses: actions/checkout@v2
       - name: Get current version
         id: vars
-        run: echo ::set-output name=version::$(cat current-version.txt)
+        run: |
+          echo ::set-output name=version::$(cat current-version.txt)
       # - name: Save current version in a variable
       #   env:
       #     CURRENT_VERSION: ${{ steps.vars.outputs.version }}
-      - name: Login to Docker
-        env:
-          DOCKER_USER: ${{ secrets.DOCKER_USER }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: |
-          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      # - name: Login to Docker
+      #   env:
+      #     DOCKER_USER: ${{ secrets.DOCKER_USER }}
+      #     DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      #   run: |
+      #     docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       # - name: Build importer Docker image
       #   run: |
       #     docker build ./importer -t costigator/importer:latest
