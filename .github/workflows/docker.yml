@@ -6,49 +6,36 @@ on:
     tags:
       - 'v*.*.*'
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: olegtarasov/get-tag@v2.1
-        id: tagName
-      - name: Test 
+      - uses: actions/checkout@v2
+      - name: Set version tag
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Check version tag
+        env:
+          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
         run: |
-          echo $GIT_TAG_NAME
-
-
-
-      # - uses: actions/checkout@v2
-      # - name: Set output
-      #   id: vars
-      #   run: echo ::set-output name=tag::${GITHUB_REF}
-      # - name: Check output
-      #   env:
-      #     RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
-      #   run: |
-      #     echo $RELEASE_VERSION
-      #     echo ${{ steps.vars.outputs.tag }}
- 
-      # - name: Login to Docker
-      #   env:
-      #     DOCKER_USER: ${{ secrets.DOCKER_USER }}
-      #     DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      #   run: |
-      #     docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      # - name: Build importer Docker image
-      #   run: |
-      #     docker build ./importer -t costigator/importer:latest
-      #     docker build ./importer -t costigator/importer:1.0.0
-      #     docker build ./web -t costigator/web:latest
-      #     docker build ./web -t costigator/web:1.0.0
-      # - name: Push images to Docker
-      #   run: |
-      #     docker push costigator/importer:latest
-      #     docker push costigator/importer:1.0.0
-      #     docker push costigator/web:latest
-      #     docker push costigator/web:1.0.0
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
+      - name: Login to Docker
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Build importer Docker image
+        run: |
+          docker build ./importer -t costigator/importer:latest
+          docker build ./importer -t costigator/importer:$RELEASE_VERSION
+          docker build ./web -t costigator/web:latest
+          docker build ./web -t costigator/web:$RELEASE_VERSION
+      - name: Push images to Docker
+        run: |
+          docker push costigator/importer:latest
+          docker push costigator/importer:$RELEASE_VERSION
+          docker push costigator/web:latest
+          docker push costigator/web:$RELEASE_VERSION
         
