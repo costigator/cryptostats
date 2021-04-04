@@ -23,22 +23,25 @@ jobs:
       - name: Save current version in a variable
         env:
           CURRENT_VERSION: ${{ steps.vars.outputs.version }}
-      # - name: Login to Docker
-      #   env:
-      #     DOCKER_USER: ${{ secrets.DOCKER_USER }}
-      #     DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      #   run: |
-      #     docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      # - name: Build importer Docker image
-      #   run: |
-      #     docker build ./importer -t costigator/importer:latest
-      #     docker build ./importer -t costigator/importer:$CURRENT_VERSION
-      #     docker build ./web -t costigator/web:latest
-      #     docker build ./web -t costigator/web:$CURRENT_VERSION
-      # - name: Push images to Docker
-      #   run: |
-      #     docker push costigator/importer:latest
-      #     docker push costigator/importer:$CURRENT_VERSION
-      #     docker push costigator/web:latest
-      #     docker push costigator/web:$CURRENT_VERSION
+        run: |
+          echo "Current version: " $CURRENT_VERSION
+      - name: Login to Docker
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Build importer Docker image
+        run: |
+          docker build ./importer -t costigator/importer:latest
+          docker build ./importer -t costigator/importer:$CURRENT_VERSION
+          docker build ./web -t costigator/web:latest
+          docker build ./web -t costigator/web:$CURRENT_VERSION
+      - name: Push images to Docker
+        run: |
+          docker push costigator/importer:latest
+          docker push costigator/importer:$CURRENT_VERSION
+          docker push costigator/web:latest
+          docker push costigator/web:$CURRENT_VERSION
+      
         
