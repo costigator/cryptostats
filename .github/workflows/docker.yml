@@ -1,25 +1,23 @@
 name: Docker Images Deployment
 
-# Run this action only when a new tag is created
+# Controls when the action will run. 
 on:
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    tags:
-      - 'v*.*.*'
+    paths:
+      - 'current-version.txt'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
+  Build and Push Docker Images:
     runs-on: ubuntu-latest
       - uses: actions/checkout@v2
-      - name: Set version tag
-        id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-      - name: Check version tag
-        env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+      - name: Get current version
         run: |
-          echo $RELEASE_VERSION
-          echo ${{ steps.vars.outputs.tag }}
+          echo '::set-env name=CURRENT_VERSION::'$(cat current-version.txt)
       - name: Login to Docker
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
@@ -29,13 +27,13 @@ jobs:
       - name: Build importer Docker image
         run: |
           docker build ./importer -t costigator/importer:latest
-          docker build ./importer -t costigator/importer:$RELEASE_VERSION
+          docker build ./importer -t costigator/importer:$CURRENT_VERSION
           docker build ./web -t costigator/web:latest
-          docker build ./web -t costigator/web:$RELEASE_VERSION
+          docker build ./web -t costigator/web:$CURRENT_VERSION
       - name: Push images to Docker
         run: |
           docker push costigator/importer:latest
-          docker push costigator/importer:$RELEASE_VERSION
+          docker push costigator/importer:$CURRENT_VERSION
           docker push costigator/web:latest
-          docker push costigator/web:$RELEASE_VERSION
+          docker push costigator/web:$CURRENT_VERSION
         
