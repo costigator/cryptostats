@@ -14,16 +14,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set output
-        id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF}
-      - name: Check output
-        env:
-          RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+      - uses: olegtarasov/get-tag@v2.1
+        id: tagName
+      - name: Test 
         run: |
-          echo $RELEASE_VERSION
-          echo ${{ steps.vars.outputs.tag }}
+          echo $GIT_TAG_NAME
+
+
+
+      # - uses: actions/checkout@v2
+      # - name: Set output
+      #   id: vars
+      #   run: echo ::set-output name=tag::${GITHUB_REF}
+      # - name: Check output
+      #   env:
+      #     RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
+      #   run: |
+      #     echo $RELEASE_VERSION
+      #     echo ${{ steps.vars.outputs.tag }}
  
       # - name: Login to Docker
       #   env:
