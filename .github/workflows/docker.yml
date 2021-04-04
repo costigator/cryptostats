@@ -19,9 +19,9 @@ jobs:
       - name: Get current version
         id: vars
         run: echo ::set-output name=version::$(cat current-version.txt)
-      # - name: Save current version in a variable
-      #   env:
-      #     CURRENT_VERSION: ${{ steps.vars.outputs.version }}
+      - name: Save current version in a variable
+        env:
+          CURRENT_VERSION: ${{ steps.vars.outputs.version }}
       # - name: Login to Docker
       #   env:
       #     DOCKER_USER: ${{ secrets.DOCKER_USER }}
