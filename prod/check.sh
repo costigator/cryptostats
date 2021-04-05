@@ -26,3 +26,10 @@ echo "$digest"
 echo -n "Fetching local digest...  "
 local_digest=$(docker images -q --no-trunc $IMAGE:latest)
 echo "$local_digest"
+
+if [ "$digest" != "$local_digest" ] ; then
+	echo "Update available. Executing update command..."
+	($COMMAND)
+else
+	echo "Already up to date. Nothing to do."
+fi
