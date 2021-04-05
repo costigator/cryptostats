@@ -7,6 +7,7 @@
 IMAGE="$1"
 COMMAND="$2"
 
+echo "Check if the jq command is installed..."
 which jq
 if [ "$?" != "0" ] ; then
 	echo "'jq' command not found. Please install and ensure that it is available in PATH."
@@ -21,3 +22,7 @@ digest=$(curl --silent -H "Accept: application/vnd.docker.distribution.manifest.
 	-H "Authorization: Bearer $token" \
 	"https://registry.hub.docker.com/v2/$IMAGE/manifests/latest" | jq -r '.config.digest')
 echo "$digest"
+
+echo -n "Fetching local digest...  "
+local_digest=$(docker images -q --no-trunc $IMAGE:latest)
+echo "$local_digest"
