@@ -1,29 +1,16 @@
 # CryptoStats
 
-My goal is to develop a container application to analyze crypocurrencies.
+My goal is to develop a container application to analyze cryptocurrencies.
 
 ## Architecture
 
 ![Architecture](architecture/architecture.svg)
 
-## Start the app
+## Run the app
 
-Copy the content of `prod.yml` to your PC in a file named `docker-compose.yml` and start the app with:
+To run this app on your PC you need to have installed [Docker](https://www.docker.com/get-started) and [Git](https://git-scm.com/downloads). Then follow [this guide](prod/README.md).
 
-```bash
-docker login
-docker-compose up -d
-```
-
-NB: to download the historical data it takes many hours.
-
-## Monitor the app
-
-```bash
-docker-compose logs -f
-docker ps
-docker stats
-```
+If you want to take a look at a live demo please check [cryptoibex.io](https://cryptoibex.io)
 
 ## Contribute
 
