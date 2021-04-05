@@ -7,7 +7,6 @@ echo "Download new images..."
 docker pull costigator/importer
 docker pull costigator/web
 docker pull mongo
-echo "Stop & Start the app..."
-docker-compose down
+echo "Updated the app..."
 docker-compose up -d
 echo "Update finished successfully."
