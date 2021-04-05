@@ -40,3 +40,7 @@ To delete all the data present in the DB just delete the content of this folder 
 ```cmd
 ./mongodb/data
 ```
+
+## Commands
+
+Some [useful commands](commands.md).
