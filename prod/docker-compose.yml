@@ -6,7 +6,7 @@ services:
     image: mongo
     restart: always
     volumes:
-      - ./mongodb/data:/data/db
+      - ./../mongodb/data:/data/db
     ports:
       - 27017:27017
     environment:
@@ -14,7 +14,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=Cr7ptopa55
 
   importer:
-    image: costigator/importer:1.0.0
+    image: costigator/importer:latest
     restart: always
     depends_on:
       - mongodb
@@ -22,7 +22,7 @@ services:
       - DB_URI=mongodb://crypto:Cr7ptopa55@mongodb:27017
 
   web:
-    image: costigator/web:1.0.0
+    image: costigator/web:latest
     restart: always
     depends_on:
       - mongodb
