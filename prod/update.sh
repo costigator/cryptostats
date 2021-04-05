@@ -10,3 +10,4 @@ docker pull mongo
 echo "Stop & Start the app..."
 docker-compose down
 docker-compose up -d
+echo "Update finished successfully."
