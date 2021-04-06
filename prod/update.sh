@@ -10,5 +10,5 @@ docker pull costigator/importer
 docker pull costigator/web
 docker pull mongo
 echo "Updated the app..."
-docker-compose up -ds
+docker-compose up -d
 echo "Update finished successfully."
