@@ -1,4 +1,6 @@
 #!/bin/sh
+echo "--------------------------"
+echo $(date '+%d/%m/%Y %H:%M:%S')
 echo "Update GIT repository..."
 git pull
 echo "Prune unused Docker images..."
@@ -8,5 +10,5 @@ docker pull costigator/importer
 docker pull costigator/web
 docker pull mongo
 echo "Updated the app..."
-docker-compose up -d
+docker-compose up -ds
 echo "Update finished successfully."
