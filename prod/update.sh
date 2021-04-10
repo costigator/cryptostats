@@ -8,6 +8,7 @@ echo "Prune unused Docker images..."
 echo "Download new images..."
 /usr/local/bin/docker pull costigator/importer
 /usr/local/bin/docker pull costigator/web
+/usr/local/bin/docker pull costigator/analyzer
 /usr/local/bin/docker pull mongo
 echo "Updated the app..."
 /usr/local/bin/docker-compose up -d
