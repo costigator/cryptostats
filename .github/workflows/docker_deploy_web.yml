@@ -1,11 +1,11 @@
-name: Docker Images Deployment
+name: Web Docker Image
 
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     paths:
-      - 'current-version.txt'
+      - 'web/VERSION'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -19,7 +19,7 @@ jobs:
       - name: Get current version
         id: vars
         run: |
-          echo ::set-output name=version::$(cat current-version.txt)
+          echo ::set-output name=version::$(cat web/VERSION)
       - name: Login to Docker
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
@@ -30,16 +30,12 @@ jobs:
         env:
           CURRENT_VERSION: ${{ steps.vars.outputs.version }}
         run: |
-          docker build ./importer -t costigator/importer:latest
-          docker build ./importer -t costigator/importer:$CURRENT_VERSION
           docker build ./web -t costigator/web:latest
           docker build ./web -t costigator/web:$CURRENT_VERSION
       - name: Push images to Docker
         env:
           CURRENT_VERSION: ${{ steps.vars.outputs.version }}
         run: |
-          docker push costigator/importer:latest
-          docker push costigator/importer:$CURRENT_VERSION
           docker push costigator/web:latest
           docker push costigator/web:$CURRENT_VERSION
       
