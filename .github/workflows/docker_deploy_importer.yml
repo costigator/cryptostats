@@ -1,4 +1,4 @@
-name: Docker Image Deployment for Importer Container
+name: Importer Docker Image
 
 # Controls when the action will run. 
 on:
