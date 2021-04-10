@@ -1,0 +1,4 @@
+DB_URI: mongodb://crypto:Cr7ptopa55@localhost:27017
+
+ANALYZER_RUN_EVERY_MIN: 1
+ANALYZER_AMOUNT_CANDLES: 100
