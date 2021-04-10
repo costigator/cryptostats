@@ -24,6 +24,12 @@ Build and start the app with docker compose:
 docker-compose up -d --build --remove-orphans
 ```
 
+Check the logs:
+
+```cmd
+docker-compose logs -f
+```
+
 ## Python
 
 ### Install packages
