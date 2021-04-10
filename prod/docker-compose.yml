@@ -21,6 +21,15 @@ services:
     environment: 
       - DB_URI=mongodb://crypto:Cr7ptopa55@mongodb:27017
 
+  analyzer:
+    image: costigator/analyzer:latest
+    restart: always
+    depends_on:
+      - mongodb
+    environment: 
+      - DB_URI=mongodb://crypto:Cr7ptopa55@mongodb:27017
+      - ANALYZER_RUN_EVERY_MIN=5
+
   web:
     image: costigator/web:latest
     restart: always

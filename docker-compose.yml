@@ -22,6 +22,15 @@ services:
     environment: 
       - DB_URI=mongodb://crypto:Cr7ptopa55@mongodb:27017
 
+  analyzer:
+    image: analyzer
+    build: ./analyzer
+    restart: always
+    depends_on:
+      - mongodb
+    environment: 
+      - DB_URI=mongodb://crypto:Cr7ptopa55@mongodb:27017
+      
   web:
     image: web
     build: ./web
