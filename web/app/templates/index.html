@@ -14,7 +14,8 @@
                     <tr>
                         <th>Active</th>
                         <th>Symbol</th>
-                        <th >Name</th>
+                        <th>Name</th>
+                        <th>Price</th>
                         <th class="sorted descending">Market Cap</th>
                         <th>Integrity</th>
                         <th>Volatility 15m</th>
@@ -39,6 +40,7 @@
                             </a>
                         </td>
                         <td>{{ symbol.name }}</td>
+                        <td data-sort-value="{{ symbol.current_price }}">{{ symbol.current_price }}</td>
                         <td data-sort-value="{{ symbol.market_cap }}">{{ symbol.market_cap }}</td>
                         <td data-sort-value="{{ symbol.integrity_1m }}">
                             <div class="ui rating" data-rating="{{ symbol.integrity_1m }}" data-max-rating="3"></div>
