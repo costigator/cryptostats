@@ -83,7 +83,8 @@ if __name__ == "__main__":
                     record['name'] = coin.get('name')
                     record['exchange'] = 'binance'
                     record['price_change_percentage_24h'] = coin.get('price_change_percentage_24h')
-                    
+                    record['current_price'] = coin.get('current_price')
+
                     bulkUpdate.append(UpdateOne(
                         {
                             "symbol": symbol
