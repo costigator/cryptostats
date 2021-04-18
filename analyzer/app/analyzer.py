@@ -5,7 +5,6 @@
 # Analyze cryptocurrencies                                                           -
 # ------------------------------------------------------------------------------------
 
-# from pandas.core.frame import DataFrame
 import config, logging
 import pandas as pd
 import numpy as np
